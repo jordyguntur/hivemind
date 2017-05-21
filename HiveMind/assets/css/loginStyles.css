@@ -1,0 +1,75 @@
+body {
+   background:#FAFAFA !important;
+}
+
+.vcenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.removePad {
+    padding: 0px;
+}
+
+.removeBullets {
+  list-style-type: none !important;
+}
+
+ul {
+    list-style: none;
+    padding: 0px;
+    text-align: center;;
+}
+
+#evilLine {
+    text-decoration: none;
+}
+
+.login-logo {
+    max-width: 75%;
+    padding-bottom: 4%
+}
+
+.logo {
+    max-width: 40%;
+}
+
+.logorow {
+    text-align: center;
+}
+
+.logonav {
+    max-width: 20%;
+    margin-top: -5.5%;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.botPadding {
+    padding-bottom: 5%;
+}
+
+.botPadding2 {
+    padding-bottom: 2%;
+}
+
+.mar14 {
+    margin-left: 14%;
+}
+
+.marbot {
+    margin-bottom: 1%;
+}
+
+.textDecorationNone {
+    text-decoration: none:
+}
+
+.marLeftRight {
+    margin-left: 5%;
+    margin-right: 5%;
+}

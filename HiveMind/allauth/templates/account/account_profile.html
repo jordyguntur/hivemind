@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block head_title %}Hive Profile{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12 card" style="padding-bottom: 3%;">
+        <div class="content" style="text-align: center">
+            <h1>{{user}}</h1>
+
+            <p>Profile Description:</p>
+            <div class="">
+                <h3>
+                    {{ bio }}
+                </h3>
+            </div>
+
+            <div class="col-xs-6 col-xs-offset-3">
+                <form method="POST" enctype="multipart/form-data" action = "" required = "False">
+                    {% csrf_token %}
+
+                    <label>Enter bio here:</label>
+                    <textarea class="form-control text-center" id="id_about" maxlength="500" name="about" type="text">
+                    </textarea>
+                    <button class="btn btn-info" id="Add" type="submit"> Update Bio </button>
+                </form>
+            </div>
+
+            <div class="col-xs-12">
+                <button class="btn btn-warning" id="Add" data-toggle="modal" data-target="#myModal"> Upload a File </button>
+                <button class="btn btn-warning" id="Add" data-toggle="modal" data-target="#myModal2"> My Files </button>
+                <button class="btn btn-warning" id="Add" data-toggle="modal" data-target="#myModal3"> Delete your Files </button>
+            </div>
+
+            <div class="col-xs-12">
+
+            </div>
+
+
+            <!-- Modal for file upload -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Upload a File</h4>
+                        </div>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="modal-body">
+                                <input class = "form-control" id="id_notes_title" maxlength="250" name="notes_title" type="text" required>
+                                <input class="" id="id_notes_file" name="notes_file" type="file" required="">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info btn-simple" id="fileSubmit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for file list -->
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">My Notes</h4>
+                        </div>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="modal-body">
+                                {% for note in portfolio %}
+                                    {% if user == note.user %}
+                                        <a class="btn btn-warning" href="{{ note.notes_file.url }}" download> <p> {{ note.notes_title }}</p></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Delete a File</h4>
+                        </div>
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="modal-body">
+                                {% for note in portfolio %}
+                                    {% if user == note.user %}
+                                        <a class="btn btn-warning" href="{{ note.notes_file.url }}" download> <p> {{ note.notes_title }}</p></a>
+                                    {% endif %}
+                                {% endfor %}
+                                <input class = "form-control" id="id_notes_title" maxlength="250" name="notes_title" type="text">
+                           </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info btn-simple" id="Remove" name = "Remove">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

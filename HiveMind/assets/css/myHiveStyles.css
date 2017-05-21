@@ -1,0 +1,80 @@
+.hives {
+    text-align: center;
+    display: inline;
+    float: left;
+}
+
+#noRightPad {
+    padding-right: 0px;
+}
+
+.noPadding {
+    padding: 0px 0px 0px 0px;
+}
+
+.topPad2 {
+    margin-top: 5%;
+}
+
+.topPad4 {
+    margin-top: 2%;
+}
+
+.width3 {
+    max-width: 42%;
+    margin-left: 5%;
+    margin-right: 1%;
+    text-align: center;
+}
+
+.pad60Bot {
+    padding-top: 10%;
+    padding-bottom: 14.5%;
+}
+
+.hiveCourse:hover {
+    background-color: #fbc02d;
+}
+
+.maxWidth {
+    max-width: 100%;
+}
+
+#bigButton {
+    min-width: 100%;
+    font-size: 2em;
+    text-align: center;
+    min-height: 7em;
+}
+
+#insideBigButton {
+    padding: 0px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: none;
+}
+
+#footer {
+    margin-top: 3%;
+    position:relative;
+    left:0px;
+    bottom:0px;
+    height:8%;
+    width:100%;
+    background: #FAFAFA;
+}
+
+#topIndexCard {
+    /*background-color: #fbc02d;*/
+}
+
+#topIndexCardText {
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+#minSettingsButton {
+    min-width: 15em;
+}

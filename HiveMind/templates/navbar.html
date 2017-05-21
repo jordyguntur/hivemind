@@ -1,0 +1,59 @@
+<nav>
+    <div class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">HiveMind</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav">
+            <!-- <li class="active"><a href="javascript:void(0)">Active</a></li> -->
+            <!-- <li><a href="javascript:void(0)">Link</a></li> -->
+            <li class="dropdown">
+              <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Hives
+                <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="javascript:void(0)">My Hives</a></li>
+                <li><a href="javascript:void(0)">Friends</a></li>
+                <!-- <li><a href="javascript:void(0)">Something else here</a></li> -->
+                <li class="divider"></li>
+                <li class="dropdown-header">Other</li>
+                <li><a href="javascript:void(0)">Most Popular</a></li>
+                <li><a href="javascript:void(0)">Courses</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control col-sm-8" placeholder="Find a Hive...">
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- <li><a href="javascript:void(0)">Link</a></li> -->
+            <li class="dropdown">
+              <a href="http://fezvrasta.github.io/bootstrap-material-design/bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Account
+                <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <!-- <li><a href="javascript:void(0)"></a></li> -->
+                {% if request.user.is_authenticated %}
+                <li><a href="/accounts/logout">Logout</a></li>
+                <li class="divider"></li>
+                <li><a href="/accounts/profile">Profile</a></li>
+                {% else %}
+                <li><a href="/accounts/login">Login</a></li>
+                <li><a href="/accounts/signup">Signup</a></li>
+                <!-- <li class="divider"></li> -->
+                <!-- <li><a href="/accounts/profile">Profile</a></li> -->
+                {% endif %}
+
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</nav>

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="col-sm-12">
+    {{ form }}
+</div>
+<button type="submit"> upload </button>
+</form>
+
+{% endblock %}

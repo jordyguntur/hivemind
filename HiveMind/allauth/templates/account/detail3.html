@@ -1,0 +1,303 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<div class="card text-center botPadding2">
+    <h1>{{ hive.course }} HIVE</h1>
+</div>
+
+<h2>
+
+  {% if proper == 1 %}
+    <b> <i>Sorry</i> </b>, looks like you either tried to <b>add a user</b> already in {{hive.course}}
+  {%endif%}
+
+  {% if proper == 2 %}
+      <b><i>Whoops</i></b>, looks like you either tried to remove a <b>user NOT</b> already in {{hive.course}}
+  {%endif%}
+
+  {% if proper == 3 %}
+      <b><i>Yikes</i></b>, looks like you either tried to delete a <b>file NOT</b> already in {{hive.course}}
+  {%endif%}
+
+  {% if proper == 4 %}
+      <b><i>OH NO!</i></b>, That user <b>DOES NOT</b> exist in HiveMind #SpreadTheWordTho
+  {%endif%}
+
+</h2>
+
+
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalmessages">
+    <h2>Message Board</h2>
+</button>
+
+<div class="col-sm-10 col-sm-offset-1" data-toggle="modal" data-target="#modalmessages">
+    <div class="card text-center topPad2 width3 hiveCourse">
+
+        <div class="text-center" id="hives">
+            <h2 class="pad60Bot">Message Board</h2>
+        </div>
+
+    </div>
+</div> -->
+
+<div class="modal fade" id="modalmessages" tabindex="-1" role="dialog" aria-labelledby="myModalmessages" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+
+                <h4 class="modal-title" id="myModalLabel">
+                  <h1 class="text-center">Message Board</h1>
+                </h4>
+
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <div class="row" id = "max">
+                    <div class="text-center">
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="" id = "messages">
+                                <div>
+                                    <label for="id_message">Message:</label>
+                                    <div>
+                                        <input id="id_message" maxlength="250" name="message" type="text" required="">
+                                        <button class="btn btn-info" id="submitter" type="submit"> upload </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="comments">
+
+                            {% for comment in board %}
+                                {% if comment.hivepk == hive.pk %}
+
+                                <p>{{comment.message}} <a class="" href=/accounts/profile/{{comment.user}}> <p> {{comment.user}}</p></a></p>
+                                <p>{{comment.time}}<p>
+
+
+                                {%endif%}
+                            {%endfor%}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row col-sm-12">
+
+    <div class="btn btn-info" data-toggle="modal" data-target="#myModal">
+        <div class="text-center" id="hives">
+            <h2 class="">Message Board</h2>
+        </div>
+    </div>
+
+    <div class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+        <div class="text-center" id="hives">
+            <h2 class="">Notes</h2>
+        </div>
+    </div>
+
+    <div class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <div class="text-center" id="hives">
+            <h2 class="">Members</h2>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Modal Core -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-info btn-simple">Save</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalHorizontal">
+    Notes
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{hive.course}}'s Notes
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <div class="row" id = "max">
+                  <div class="text-center">
+                      {% for note in notes %}
+                          {% if hive.pk == note.hivepk %}
+
+                              <a class="btn btn-warning" id = "notesbutt" onClick = "window.open('{{note.notes_file.url}}');"> <p> {{ note.notes_title }}</p></a>
+                          {% endif %}
+                      {% endfor %}
+                  </div>
+
+                  <div class="row" id = "red">
+                      <div class="text-center">
+
+
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="" id = "notes">
+                                <div>
+                                    <label for="id_notes_title">Notes title:</label>
+                                    <div>
+                                        <input id="id_notes_title" maxlength="250" name="notes_title" type="text" required="">
+                                        <button class="btn btn-info" id="fileSubmit" type="submit"> upload </button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-offset-5">
+                                    <input class="" id="id_notes_file" name="notes_file" type="file" required="">
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <form method="POST" enctype="multipart/form-data" action = "">
+                            {% csrf_token %}
+
+                            <div class="" id = "delete">
+                                <div>
+                                    <label for="id_username">Remove File:</label>
+                                      {{ delete }}
+                                        <button class="btn btn-info" id="delete" type="submit" name = "delete">delete </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalusers">
+    Our Members
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modalusers" tabindex="-1" role="dialog"
+     aria-labelledby="myModalusers" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Our Members
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <div class="row" id = "max">
+                  <div class="text-center">
+                      {% for person in persons %}
+
+
+                              <a class="btn btn-warning" href=/accounts/profile/{{person.username}}> <p> {{ person.username}}</p></a>
+
+                      {% endfor %}
+
+
+
+                      <form method="POST" enctype="multipart/form-data" action = "">
+                          {% csrf_token %}
+
+                          <div class="" id = "remove">
+                              <div>
+                                  <label for="id_username">Remove Users:</label>
+                                    {{ remove }}
+                                      <button class="btn btn-info" id="remove" type="submit" name = "remove"> Remove User </button>
+                              </div>
+
+                          </div>
+
+                      </form>
+                  </div>
+
+
+
+
+
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+<script src="{% static 'js/main.js' %}"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+
+// var inputElement = document.getElement('notesbutt');
+// inputElement.type = "button"
+// inputElement.addEventListener('click', function(){
+//   <iframe src=inputElement.
+//   style="width:600px; height:500px;" frameborder="0"></iframe>
+// });
+
+
+</script>
+<!-- </div> -->
+{% endblock %}

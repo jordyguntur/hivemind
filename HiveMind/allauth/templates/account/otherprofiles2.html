@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block head_title %}Hive Profile{% endblock %}
+
+{% block content %}
+<div class = "User" id = "profile_top" >
+  <h1 align = "left" id = "username" name = "Head">{{user}}</h1>
+  <hr></hr>
+</div>
+
+    <div class="" id = "Bio">
+        <div>
+          <h2>
+            <u>About Me</u>
+          </h2>
+            <h3>
+              {{ bio }}
+            </h3>
+        </div>
+
+    </div>
+{% endblock %}

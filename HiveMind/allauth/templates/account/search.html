@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card text-center">
+        <h1> Search for Users</h1>
+        <form method="POST" enctype="multipart/form-data" id = "userbox">
+            {% csrf_token %}
+
+            <div class="col-xs-6 col-xs-offset-3">
+                <input class="form-control text-center" id="id_username" maxlength="250" name="username" type="text" required="">
+            </div>
+
+            <div class="col-xs-6 col-xs-offset-3">
+                <button class="btn btn-info" type="submit" id ="mainID" name = 'userbox' onClick = "search()"> Find </button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="card text-center" style="margin-top: 2%" name = "ha" id ="ha">
+        <h1> Results </h1>
+        {%if peeps == 0%}
+            {% for user in users %}
+                <a class="btn btn-default" href=/accounts/profile/{{ user.username }}><p> {{ user.username}}</p></a>
+            {%endfor%}
+        {%endif%}
+
+        {% if peeps == 1%}
+            <h3>That user does not exist<h3>
+        {%endif%}
+    </div>
+</div>
+
+
+
+
+
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+    <script>
+
+
+
+
+
+    function search(event) {
+
+    var data = new FormData($('userbox').get(0));
+    console.log(data)
+    $.ajax({
+        url: $(this).attr('action'),
+        type: $(this).attr('method'),
+
+        data: data,
+        cache: false,
+        processData: true,
+        contentType: false,
+
+        success: function(data) {
+
+            $('#ha').load(document.URL +  ' #ha');
+        }
+
+    });
+    return false;
+    }
+
+
+    $(function() {
+
+
+
+        $('form').submit(search);
+
+    });
+    </script>
+
+
+
+</script>
+
+{% endblock %}

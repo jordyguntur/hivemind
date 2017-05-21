@@ -1,0 +1,245 @@
+{% load static from staticfiles %}
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>HiveMind</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+
+	<!-- CSS Files -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/material-kit.css' %}" rel="stylesheet"/>
+	<link href="{% static 'css/styler.css' %}" rel="stylesheet"/>
+	<link href="{% static 'css/loginStyles.css' %}" rel="stylesheet"/>
+	<link href="{% static 'css/myHiveStyles.css' %}" rel="stylesheet"/>
+
+</head>
+
+<body class="home">
+
+<!-- Navbar will come here -->
+<nav class="navbar navbar-warning" role="navigation">
+	<div class="container-fluid">
+    	<div class="navbar-header">
+    		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+    		</button>
+			<a class="navbar-brand myHiveNav" href="/accounts/myHive"><img src="{% static 'img/logo3.png' %}" class="logonav" alt=""></a>
+
+    	</div>
+
+    	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    		<ul class="nav navbar-nav navbar-right">
+
+        		<li class="dropdown">
+                    {% if request.user.is_authenticated %}
+						<li><a href="/accounts/myHive"><i class="material-icons">public</i>My Hives</a></li>
+						<li><a href="/accounts/profile"><i class="material-icons">persons</i></a></li>
+						<li><a href="/accounts/settings"><i class="material-icons">settings</i></a></li>
+						<li><a href="/accounts/logout">Logout</a></li>
+                    {% else %}
+					  <li><a href="/accounts/login">Login</a></li>
+
+                    {% endif %}
+        		</li>
+    		</ul>
+    	</div>
+	</div>
+</nav>
+<!-- end navbar -->
+
+<!-- content -->
+<div class="container" style="margin-bottom: 8%">
+
+    <div class="row col-sm-10 col-sm-offset-1">
+        <div class="card text-center marbot">
+			<p style="padding-top: 5%">Welcome to the</p>
+            <h1>{{ hive.course }}</h1>
+			<p style="padding-bottom: 5%">Hive</p>
+            <h2>
+
+              {% if proper == 1 %}
+                <b> <i>Sorry</i> </b> looks like you either tried to <b>add a user</b> already in {{hive.course}}
+              {%endif%}
+
+              {% if proper == 2 %}
+                  <b><i>Whoops</i></b> looks like you either tried to remove a <b>user NOT</b> already in {{hive.course}}
+              {%endif%}
+
+              {% if proper == 3 %}
+                  <b><i>Yikes</i></b> looks like you either tried to delete a <b>file NOT</b> already in {{hive.course}}
+              {%endif%}
+
+              {% if proper == 4 %}
+                  <b><i>OH NO!</i></b> That user <b>DOES NOT</b> exist in HiveMind #SpreadTheWordTho
+              {%endif%}
+
+            </h2>
+        </div>
+    </div>
+
+	<div class="row col-sm-10 col-sm-offset-1">
+		<div class="row col-sm-6">
+			<div class="card text-center botPadding2" style="min-height: 25em">
+				<h3>Upload a File</h3>
+
+				<!-- Notes upload -->
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+
+					<div class="col-xs-12">
+						<div class="col-xs-8 col-xs-offset-2 text-center">
+							<input class="form-control" id="id_notes_title" maxlength="250" name="notes_title" type="text" placeholder="Notes title... " required="">
+							<input class="" style="margin-left: 15%;" id="id_notes_file" name="notes_file" type="file" required="">
+							<button class="btn btn-warning" id="fileSubmit" type="submit" style="margin-top: 5%;"> upload </button>
+						</div>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+
+		<div class="row col-sm-6">
+			<div class="card text-center botPadding2 mar14" style="min-height: 25em">
+				<!-- Notes Files -->
+
+				<div class="row">
+					<h3>Hive Files:</h3>
+
+					<div class="col-sm-8 col-sm-offset-2">
+						<div class="text-center">
+							{% for note in notes %}
+								{% if hive.pk == note.hivepk %}
+									<a class="btn btn-white btn-xs" id="notesbutt" onClick="window.open('{{note.notes_file.url}}');">
+										 <p>{{ note.notes_title }}</p>
+									</a>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<form method="POST" enctype="multipart/form-data" action = "">
+					{% csrf_token %}
+					<div class="col-xs-8 col-xs-offset-2">
+						<input class="form-control" id="id_notes_title" maxlength="250" name="notes_title" type="text" placeholder="Enter file to delete... " required="">
+						<button class="btn btn-danger" id="delete" type="submit" name = "delete">delete </button>
+					</div>
+				</form>
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+
+    <div class="row col-sm-10 col-sm-offset-1">
+
+        <div class="row col-sm-6">
+            <div class="card text-center botPadding2 topPad4" style="min-height: 30em">
+                <h3>Message Board</h3>
+
+                <!-- Insert Messages Here -->
+                {% for comment in board %}
+                    {% if comment.hivepk == hive.pk %}
+
+                    <h5 class="marLeftRight">"{{comment.message}}"</h5>
+                    <p style="color:gray">{{comment.user}} - {{comment.time}}</p>
+
+
+                    {%endif%}
+                {%endfor%}
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <input id="id_message" class="form-control" maxlength="250" name="message" type="text" placeholder="Enter post here... "required>
+							<button class="btn btn-warning" class="marTop" style="" id="submitter" type="submit"> Post </button>
+                        </div>
+
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="row col-sm-6">
+            <div class="card text-center botPadding2 topPad4 mar14" style="min-height: 30em">
+                <h3>Members</h3>
+
+                <!-- Insert Members Here -->
+				{% for person in persons %}
+	                <a href=/accounts/profile/{{person.username}}> <h5>{{ person.username}}</h5></a>
+	            {% endfor %}
+
+                <form method="POST" enctype="multipart/form-data" action = "">
+                    {% csrf_token %}
+                    <div class="">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <input id="id_addUser" class="form-control" maxlength="250" name="addUser" type="text" placeholder="Enter username..." required = "False">
+                        </div>
+
+						<div class="col-xs-12">
+							<button class="btn btn-warning" style="min-width: 25em;" id="add" name = "add" type="submit"> Add User To Hive</button>
+						</div>
+
+                    </div>
+                </form>
+
+                <form method="POST" enctype="multipart/form-data" action = "">
+                    {% csrf_token %}
+                    <div class="">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <input id="id_removeUser" class="form-control" maxlength="250" name="removeUser" type="text" placeholder="Enter member name to delete..."required = "False">
+                        </div>
+
+						<div class="col-xs-12">
+							<button class="btn btn-danger" style="min-width: 25em;" id="remove" type="submit" name = "remove"> Remove User </button>
+						</div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+<!-- end content -->
+
+<!--   Core JS Files   -->
+<script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/material.min.js' %}"></script>
+
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="{% static 'js/nouislider.min.js' %}" type="text/javascript"></script>
+
+<!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
+<script src="{% static 'bootstrap-datepicker.js' %}" type="text/javascript"></script>
+
+<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
+<script src="{% static 'js/material-kit.js' %}" type="text/javascript"></script>
+
+
+</body>
+</html>
