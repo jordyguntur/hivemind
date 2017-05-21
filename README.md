@@ -1,6 +1,6 @@
 # HiveMind
 
-Web Application that allows users to create accounts, join a "Hive", invite others, share files and notes. 
+Web Application that allows users to create accounts, join a "Hive", invite others and share files/notes. 
 
 ## Getting Started
 
